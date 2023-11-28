@@ -1,4 +1,7 @@
+import json
 import requests
+import re
+from bs4 import BeautifulSoup
 
 headers = {
     'accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
@@ -9,4 +12,17 @@ headers = {
 
 url = 'https://www.zillow.com/homedetails/15-Maine-Ter-A-Somerville-MA-02145/2054344316_zpid/'
 
-print(requests.get(headers=headers, url=url))
+res = requests.get(headers=headers, url=url)
+
+content = BeautifulSoup(res.text, 'html.parser').find("script", {"id": "__NEXT_DATA__"})
+
+pre_data = json.loads(content.text)
+
+data = json.loads(pre_data['props']['pageProps']['componentProps']['gdpClientCache'])
+
+keys_view = data.keys()
+
+first_key = list(keys_view)[0]
+
+print(data[first_key]['property'])
+
