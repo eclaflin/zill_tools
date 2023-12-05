@@ -7,7 +7,7 @@ class PropertyQuote:
         self.financed_amt = (self.property_listing.price - self.down_payment)
         self.mortgage_term_years = mortgage_term_years
 
-    def calculate_quote(self):
+    def calc_mortgage_pmt(self):
         self.monthly_interest_rate = self.interest_rate/12
         self.lifetime_pmts = self.mortgage_term_years * 12
         self.monthly_pmt = (
