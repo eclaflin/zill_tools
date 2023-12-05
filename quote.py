@@ -18,4 +18,11 @@ class PropertyQuote:
                 )
         )
 
-        print(self.monthly_pmt)
+        self.mothly_principal_pmt = self.financed_amt/(self.lifetime_pmts)
+
+        self.monthly_interest_pmt = self.monthly_pmt - self.mothly_principal_pmt 
+
+        fmt_output = "total monthly payment = %d\n monthly principal = %d\n monthly interest = %d\n" % (
+            self.monthly_pmt, self.mothly_principal_pmt, self.monthly_interest_pmt)
+        
+        print(fmt_output)
