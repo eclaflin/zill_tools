@@ -5,16 +5,16 @@ import sys
 from bs4 import BeautifulSoup
 from typing import Dict
 
-#headers = {
-#    'accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-#    'accept-encoding': 'gzip, deflate, br, zstd',
-#    'accept-language': 'en-US,en;q=0.9',
-#    'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-#}
-
 #url = 'https://www.zillow.com/homedetails/15-Maine-Ter-A-Somerville-MA-02145/2054344316_zpid/'
 
-def scrape_page(url, headers):
+def scrape_page(url):
+
+    headers = {
+        'accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+        'accept-encoding': 'gzip, deflate, br, zstd',
+        'accept-language': 'en-US,en;q=0.9',
+        'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+    }
 
     res = requests.get(url, headers=headers)
 
@@ -103,14 +103,10 @@ class PropertyListing:
 
     @classmethod
     def from_dict(cls, listing_dict: Dict[str, any]) -> 'PropertyListing':
-        # Define a set of allowed keys
-        allowed_keys = {'zpid', 'city', 'state', 'homeStatus', 'address', 'bedrooms', 'bathrooms',
-                        'price', 'yearBuilt', 'streetAddress', 'zipcode', 'homeType', 'monthlyHoaFee',
-                        'livingArea', 'taxHistory', 'priceHistory', 'timeOnZillow', 'pageViewCount',
-                        'favoriteCount', 'daysOnZillow', 'latitude', 'longitude', 'propertyTaxRate',
-                        'lotSize', 'annualHomeownersInsurance'}
+
+        valid_keys = cls.__init__.__code__.co_varnames[1:]
 
         # Extract only the allowed keys from listing_dict
-        filtered_dict = {k: v for k, v in listing_dict.items() if k in allowed_keys}
+        filtered_dict = {k: v for k, v in listing_dict.items() if k in valid_keys}
 
         return cls(**filtered_dict)
