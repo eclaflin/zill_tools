@@ -13,7 +13,7 @@ class PropertyQuote:
             self.monthly_tax_pmt = self.curr_tax_ass/12
 
         except:
-            raise valueError('No tax history available on zillow') 
+            raise ValueError('No tax history available on zillow') 
         
         pass
 
