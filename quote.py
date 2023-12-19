@@ -6,8 +6,25 @@ class PropertyQuote:
         self.property_listing = property_listing
         self.interest_rate = interest_rate
         self.down_payment = down_payment
-        self.financed_amt = (self.property_listing.price - self.down_payment)
+        #self.financed_amt = (self.property_listing.price - self.down_payment)
         self.mortgage_term_years = mortgage_term_years
+
+    def closing_cost_adj(self):
+        """
+        Factoring for 4.1% of the total loan amount in closing fees due up front, 
+        this means that the financed amount is actually not the list minus the down pmt
+        rather, the down payment needs to be treated as an available amount
+        """
+        # calculated relationship between available cash amount and closing cost pct of list price, assume 4.1% closing
+        self.down_pct_list = self.down_payment/self.property_listing.price
+        self.closing_pct_list = (-0.03999999999999997*self.down_pct_list) + 0.04246
+        self.closing_cost_est = self.closing_pct_list * self.property_listing.price
+
+        self.net_down_payment = self.down_payment - self.closing_cost_est
+        
+        return self.property_listing.price - self.net_down_payment
+        
+        pass
 
     def calc_tax_pmt(self):
         try:
@@ -27,6 +44,8 @@ class PropertyQuote:
 
     def calc_mortgage_pmt(self):
         self.calc_tax_pmt()
+
+        self.financed_amt = self.closing_cost_adj()
 
         self.monthly_interest_rate = self.interest_rate/12
         self.lifetime_pmts = self.mortgage_term_years * 12
@@ -51,6 +70,9 @@ class PropertyQuote:
         table.add_row(['Monthly Interest',"${:,.2f}".format(self.monthly_interest_pmt)])
         table.add_row(['Monthly Tax', "${:,.2f}".format(self.monthly_tax_pmt)])
         table.add_row(['Total Monthly Payment', "${:,.2f}".format(self.total_monthly_pmt)])
+        table.add_row(['',''])
+        table.add_row(['Estimated Closing Cost', "${:,.2f}".format(self.closing_cost_est)])
+        table.add_row(['Estimated Total Financed Amount', "${:,.2f}".format(self.financed_amt)])
 
         print(table)
         #fmt_output = "total monthly payment = %d\n monthly principal = %d\n monthly interest = %d\n monthly_tax = %d" % (
