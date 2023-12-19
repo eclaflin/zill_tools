@@ -1,3 +1,4 @@
+from tax import rate_pull
 
 class PropertyQuote:
     def __init__(self, property_listing, interest_rate, down_payment, mortgage_term_years):
@@ -9,12 +10,18 @@ class PropertyQuote:
 
     def calc_tax_pmt(self):
         try:
-            self.curr_tax_ass = self.property_listing.taxHistory[0]['taxPaid']
-            self.monthly_tax_pmt = self.curr_tax_ass/12
+            if len(self.property_listing.taxHistory) == 0:
+                self.muni_tax_rate = rate_pull(self.property_listing.zipcode, self.property_listing.city)
+                self.estimated_tax_ass = (self.property_listing.price/1000)*self.muni_tax_rate
+                self.monthly_tax_pmt = self.estimated_tax_ass/12
+
+            else:
+                self.curr_tax_ass = self.property_listing.taxHistory[0]['taxPaid']
+                self.monthly_tax_pmt = self.curr_tax_ass/12
 
         except:
-            raise ValueError('No tax history available on zillow') 
-        
+            raise ValueError('Error calculating tax assessment') 
+
         pass
 
     def calc_mortgage_pmt(self):
@@ -36,7 +43,7 @@ class PropertyQuote:
 
         self.total_monthly_pmt = self.monthly_loan_pmt + self.monthly_tax_pmt
 
-        fmt_output = "total monthly payment = %d\n monthly principal = %d\n monthly interest = %d\n monthly_tax %d" % (
+        fmt_output = "total monthly payment = %d\n monthly principal = %d\n monthly interest = %d\n monthly_tax = %d" % (
             self.total_monthly_pmt, self.mothly_principal_pmt, self.monthly_interest_pmt, self.monthly_tax_pmt)
         
         print(fmt_output)
