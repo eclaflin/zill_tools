@@ -1,3 +1,4 @@
+from prettytable import PrettyTable
 from tax import rate_pull
 
 class PropertyQuote:
@@ -43,7 +44,16 @@ class PropertyQuote:
 
         self.total_monthly_pmt = self.monthly_loan_pmt + self.monthly_tax_pmt
 
-        fmt_output = "total monthly payment = %d\n monthly principal = %d\n monthly interest = %d\n monthly_tax = %d" % (
-            self.total_monthly_pmt, self.mothly_principal_pmt, self.monthly_interest_pmt, self.monthly_tax_pmt)
+    def write_quote(self):
+        table = PrettyTable(['Line Item','Amount'])
+        table.align['Amount'] = 'r'
+        table.add_row(['Monthly Principal',"${:,.2f}".format(self.mothly_principal_pmt)])
+        table.add_row(['Monthly Interest',"${:,.2f}".format(self.monthly_interest_pmt)])
+        table.add_row(['Monthly Tax', "${:,.2f}".format(self.monthly_tax_pmt)])
+        table.add_row(['Total Monthly Payment', "${:,.2f}".format(self.total_monthly_pmt)])
+
+        print(table)
+        #fmt_output = "total monthly payment = %d\n monthly principal = %d\n monthly interest = %d\n monthly_tax = %d" % (
+        #    self.total_monthly_pmt, self.mothly_principal_pmt, self.monthly_interest_pmt, self.monthly_tax_pmt)
         
-        print(fmt_output)
+        #print(fmt_output)

@@ -15,3 +15,5 @@ int_rate = float(get_latest_rate())/100
 quote = PropertyQuote(property_listing=listing, interest_rate=float(int_rate), down_payment=int(down), mortgage_term_years=30)
 
 quote.calc_mortgage_pmt()
+
+quote.write_quote()
