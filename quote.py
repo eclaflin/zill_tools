@@ -84,15 +84,26 @@ class PropertyQuote:
 
 def quote_a_property():
 
-    url = input("Enter a Zillow Listing URL: ")
-    data_dict = scrape_page(url)
-    listing = PropertyListing.from_dict(data_dict)
+    exit_scr = False
 
-    print("The list price is %d\n" % listing.price)
-    down = input("Enter a down payment amount: ")
-    int_rate = float(get_latest_rate())/100
+    while not exit_scr:
 
-    quote = PropertyQuote(property_listing=listing, interest_rate=float(int_rate), down_payment=int(down), mortgage_term_years=30)
+        url = input("Enter a Zillow Listing URL: ")
+        data_dict = scrape_page(url)
+        listing = PropertyListing.from_dict(data_dict)
 
-    quote.calc_mortgage_pmt()
-    quote.write_quote()
+        print("The list price is %d\n" % listing.price)
+        down = input("Enter a down payment amount: ")
+        int_rate = float(get_latest_rate())/100
+
+        quote = PropertyQuote(property_listing=listing, interest_rate=float(int_rate), down_payment=int(down), mortgage_term_years=30)
+
+        quote.calc_mortgage_pmt()
+        quote.write_quote()
+
+        proceed = input("Quote Another? [Y/n]\n")
+
+        if proceed.lower() == 'n':
+            exit_scr = True
+
+    
