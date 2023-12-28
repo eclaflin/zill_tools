@@ -30,10 +30,10 @@ def main():
     )
     menu_index = menu.show()
 
-    while not main_menu_exit():
+    while not main_menu_exit:
 
         if menu_index == 0:
-            return quote_a_property()
+            main_menu_exit = quote_a_property()
         
         elif menu_index == 1:
             return closing_cost_estimator()

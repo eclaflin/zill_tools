@@ -105,5 +105,6 @@ def quote_a_property():
 
         if proceed.lower() == 'n':
             exit_scr = True
+            return exit_scr
 
     
