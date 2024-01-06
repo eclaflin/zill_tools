@@ -34,3 +34,8 @@ class PropertyListing(BaseModel):
 
     class Config:
         schema_extra = {"example": ex_property_listing}
+
+class SearchResponse(BaseModel):
+    status: bool = True
+    message: str = "Success"
+    data: List[PropertyListing]
