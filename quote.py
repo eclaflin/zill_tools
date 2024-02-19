@@ -13,13 +13,13 @@ class PropertyQuote:
 
     def closing_cost_adj(self):
         """
-        Factoring for 4.1% of the total loan amount in closing fees due up front, 
+        Factoring for 2% of the total loan amount in closing fees due up front, 
         this means that the financed amount is actually not the list minus the down pmt
         rather, the down payment needs to be treated as an available amount
         """
         # calculated relationship between available cash amount and closing cost pct of list price, assume 4.1% closing
         self.down_pct_list = self.down_payment/self.property_listing.price
-        self.closing_pct_list = (-0.03999999999999997*self.down_pct_list) + 0.04246
+        self.closing_pct_list = (-0.01904*self.down_pct_list) + 0.0202912
         self.closing_cost_est = self.closing_pct_list * self.property_listing.price
 
         self.net_down_payment = self.down_payment - self.closing_cost_est
