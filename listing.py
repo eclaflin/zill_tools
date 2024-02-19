@@ -63,16 +63,12 @@ class PropertyListing:
                  monthlyHoaFee,
                  livingArea,
                  taxHistory, 
-                 priceHistory, 
-                 timeOnZillow, 
-                 pageViewCount, 
-                 favoriteCount,
+                 priceHistory,
                  daysOnZillow, 
                  latitude, 
                  longitude,
                  propertyTaxRate,
-                 lotSize,
-                 annualHomeownersInsurance):
+                 lotSize):
         
         self.zpid = zpid 
         self.city = city 
@@ -90,15 +86,11 @@ class PropertyListing:
         self.livingArea = livingArea
         self.taxHistory = taxHistory 
         self.priceHistory = priceHistory 
-        self.timeOnZillow = timeOnZillow 
-        self.pageViewCount = pageViewCount 
-        self.favoriteCount = favoriteCount
         self.daysOnZillow = daysOnZillow 
         self.latitude = latitude 
         self.longitude = longitude
         self.propertyTaxRate = propertyTaxRate
         self.lotSize = lotSize
-        self.annualHomeownersInsurance = annualHomeownersInsurance
 
 
     @classmethod
