@@ -12,3 +12,9 @@
 2. Quote Manually
 
 ### Quote from a listing
+
+
+https://github.com/ETretyakov/data-scraping-api/blob/master/app/quotes/api.py
+
+https://medium.com/@estretyakov/the-data-scraping-on-demand-using-fastapi-39a0bd47146b
+
