@@ -94,7 +94,28 @@ def quote_a_property():
 
         print("The list price is %d\n" % listing.price)
         down = input("Enter a down payment amount: ")
-        int_rate = float(get_latest_rate())/100
+        
+        
+        int_rate = float(get_latest_rate())/100 
+
+        print("The current national average interest rate is %f \n" % int_rate)
+        print("Would you like to enter a different interest rate [Y/n]\n")
+
+        int_rate_choice = input("Selection: ")
+
+        awaiting_int_rate_response = True
+
+        while awaiting_int_rate_response:
+            if int_rate_choice.lower() == 'n':
+                awaiting_int_rate_response = False
+
+            elif int_rate_choice.lower() == 'y':
+                int_rate = input("Enter a different interest rate as a decimal: ")
+                awaiting_int_rate_response = False
+
+            else:
+                print("Invalid Response, please try again")
+                
 
         quote = PropertyQuote(property_listing=listing, interest_rate=float(int_rate), down_payment=int(down), mortgage_term_years=30)
 
